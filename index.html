@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}MyStory.ai - Hikaye Üretici{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/story.css') }}" type="text/css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" type="text/css">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">Hikayeni Oluştur</h1>
+    <div class="form-container">
+        <form id="storyForm" method="POST">
+            <div class="form-group button-group">
+                <button type="button" id="randomize" class="secondary-button">Rastgele</button>
+                <button type="button" id="clear" class="secondary-button">Temizle</button>
+            </div>
+
+            <div class="form-group">
+                <label for="genre">Hikaye Türü:</label>
+                <div id="genreGrid" class="button-grid">
+                    <button type="button" class="outline-btn">Aksiyon</button>
+                    <button type="button" class="outline-btn">Komedi</button>
+                    <button type="button" class="outline-btn">Romantik</button>
+                    <button type="button" class="outline-btn">Bilim Kurgu</button>
+                    <button type="button" class="outline-btn">Korku</button>
+                    <button type="button" class="outline-btn">Gizem</button>
+                    <button type="button" class="outline-btn">Polisiye</button>
+                    <button type="button" class="outline-btn">Fantastik</button>
+                    <button type="button" class="outline-btn">Tarihi</button>
+                    <button type="button" class="outline-btn">Western</button>
+                    <div class="custom-input-wrapper">
+                        <span class="quill-icon">✒️</span>
+                        <input type="text" id="customGenre" name="customGenre" placeholder="Özel..." class="custom-input">
+                    </div>
+                </div>
+                <input type="hidden" id="genre" name="genre">
+            </div>
+
+            <div class="form-group">
+                <label for="writing_style">Yazım Stili:</label>
+                <div class="custom-dropdown">
+                    <button type="button" class="dropdown-button" data-value="varsayilan" id="writingStyleButton">Varsayılan</button>
+                    <div class="dropdown-content" id="writingStyleDropdown">
+                        <div class="dropdown-item" data-value="varsayilan">Varsayılan</div>
+                        <div class="dropdown-item" data-value="aciklayici">Açıklayıcı</div>
+                        <div class="dropdown-item" data-value="betimleyici">Betimleyici</div>
+                        <div class="dropdown-item" data-value="psikolojik">Psikolojik</div>
+                        <div class="dropdown-item" data-value="diyalog">Diyalog</div>
+                        <div class="dropdown-item" data-value="tiyatro">Tiyatro</div>
+                        <div class="dropdown-item" data-value="belgesel">Belgesel</div>
+                        <div class="dropdown-item" data-value="hicivsel">Hicivsel</div>
+                        <div class="dropdown-item" data-value="masal">Masal</div>
+                        <div class="dropdown-item" data-value="cizgi-roman">Çizgi roman</div>
+                    </div>
+                </div>
+                <input type="hidden" id="writing_style" name="writing_style" value="varsayilan">
+            </div>
+
+            <div class="form-group">
+                <label for="plot">Hikayenin Konusu:</label>
+                <textarea id="plot" name="plot" placeholder="Hikayenizin konusunu gir..." class="plot-input"></textarea>
+            </div>
+
+            <div class="form-group">
+                <span class="chapter-counter">Bölüm Sayısı: 1</span>
+                <div class="chapter-input">
+                    <input type="range" id="chapter_count" name="chapter_count" min="1" max="5" value="1" class="chapter-slider">
+                </div>
+            </div>
+
+            <div class="button-group start-story-container">
+                <button type="button" id="createStory" class="primary-button start-story-btn">Hikaye Oluştur</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/story.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='js/index.js') }}" type="text/javascript"></script>
+<a href="{{ url_for('library') }}" class="btn btn-primary">Kütüphane</a>
+{% endblock %}

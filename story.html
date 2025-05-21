@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+<div class="story-container">
+    {% if story %}
+        <h1 style="margin-bottom:1.2rem;">{{ story.genre }} Hikayesi</h1>
+        <div class="story-chapter-container" id="storyChapterContainer">
+        </div>
+        <div class="chapter-pagination" id="chapterPagination">
+        </div>
+        {% if show_save_option %}
+            <div style="max-width:800px;margin:auto;text-align:center;">
+            {% if current_user %}
+                <form method="POST" action="{{ url_for('save_story') }}" style="display:inline;">
+                    <input type="hidden" name="genre" value="{{ story.genre }}">
+                    <input type="hidden" name="plot" value="{{ story.plot }}">
+                    <input type="hidden" name="writing_style" value="{{ story.writing_style }}">
+                    <input type="hidden" name="chapter_count" value="{{ story.chapter_count }}">
+                    <input type="hidden" name="content" value="{{ story.content }}">
+                    <button type="submit" class="btn btn-success">Kütüphaneye Kaydet</button>
+                </form>
+            {% else %}
+                <p class="alert alert-info" style="display:inline-block;">
+                    Bu hikayeyi kaydetmek için <a href="{{ url_for('login') }}">giriş yapın</a>.
+                </p>
+            {% endif %}
+            <form method="POST" action="{{ url_for('delete_story') }}" style="display:inline;">
+                <button type="submit" class="btn btn-danger">Sil</button>
+            </form>
+            </div>
+        {% endif %}
+    {% else %}
+        <h1>Hikaye Oluştur</h1>
+        <h2>Yeni Bir Hikaye Oluştur</h2>
+        <form method="POST" action="{{ url_for('story') }}" id="storyForm" style="max-width:600px;margin:auto;">
+            <label for="genre">Tür:</label>
+            <input type="text" id="genre" name="genre" placeholder="Örn: Bilim Kurgu" required>
+            <label for="plot">Konu:</label>
+            <textarea id="plot" name="plot" placeholder="Hikayenizin konusunu buraya yazın..." required></textarea>
+            <label for="writing_style">Yazım Tarzı:</label>
+            <input type="text" id="writing_style" name="writing_style" placeholder="Örn: Mizahi, Resmi">
+            <label for="chapter_count">Bölüm Sayısı:</label>
+            <input type="number" id="chapter_count" name="chapter_count" min="1" max="5" value="1">
+            <button type="submit" class="btn btn-primary">Hikaye Oluştur</button>
+        </form>
+    {% endif %}
+
+{% if show_login_prompt %}
+<div class="alert alert-info">
+    Hikayeyi kütüphanenize kaydetmek için lütfen 
+    <a href="{{ url_for('login') }}" class="gray-btn">giriş yapın</a> 
+    veya 
+    <a href="{{ url_for('signup') }}" class="gray-btn">hesap oluşturun</a>!!!
+</div>
+{% endif %}
+
+{% if show_save_option %}
+<form action="{{ url_for('save_story') }}" method="post">
+    <input type="hidden" name="genre" value="{{ story.genre }}">
+    <input type="hidden" name="plot" value="{{ story.plot }}">
+    <input type="hidden" name="writing_style" value="{{ story.writing_style }}">
+    <input type="hidden" name="chapter_count" value="{{ story.chapter_count }}">
+    <input type="hidden" name="content" value="{{ story.content }}">
+    <button type="submit" class="btn btn-primary">Kütüphaneme Kaydet</button>
+</form>
+{% endif %}
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+{% if story %}
+(function() {
+    const content = {{ story.content|tojson }};
+    const chapterCount = Math.max(1, Math.min({{ story.chapter_count|int }}, 5)); // Clamp to 1-5
+    let chapters = [];
+
+    let regex = /(?:Chapter|Bölüm)\s*\d+[:.-]?\s*/gi;
+    let splits = content.split(regex);
+    if (splits.length > 1) {
+        if (splits[0].trim() === "") splits.shift();
+        chapters = splits;
+    } else {
+        let avgLen = Math.ceil(content.length / chapterCount);
+        for (let i = 0; i < chapterCount; i++) {
+            chapters.push(content.slice(i * avgLen, (i + 1) * avgLen));
+        }
+    }
+
+    let currentIdx = 0;
+
+    function renderChapter(idx) {
+        const container = document.getElementById('storyChapterContainer');
+        container.innerHTML = chapters[idx] ? chapters[idx].replace(/\n/g, "<br>") : "";
+        container.scrollIntoView({behavior: "smooth"});
+        currentIdx = idx;
+        renderPagination(idx);
+    }
+
+    function renderPagination(activeIdx) {
+        const pag = document.getElementById('chapterPagination');
+        pag.innerHTML = '';
+
+        // Left arrow
+        const leftBtn = document.createElement('button');
+        leftBtn.innerHTML = '&#8592;';
+        leftBtn.className = 'arrow-btn';
+        leftBtn.disabled = activeIdx === 0;
+        leftBtn.onclick = function() {
+            if (activeIdx > 0) renderChapter(activeIdx - 1);
+        };
+        pag.appendChild(leftBtn);
+
+        for (let i = 0; i < chapters.length; i++) {
+            const btn = document.createElement('button');
+            btn.textContent = (i + 1);
+            btn.className = 'chapter-btn' + (i === activeIdx ? ' active' : '');
+            btn.onclick = function() {
+                renderChapter(i);
+            };
+            pag.appendChild(btn);
+        }
+
+        const rightBtn = document.createElement('button');
+        rightBtn.innerHTML = '&#8594;';
+        rightBtn.className = 'arrow-btn';
+        rightBtn.disabled = activeIdx === chapters.length - 1;
+        rightBtn.onclick = function() {
+            if (activeIdx < chapters.length - 1) renderChapter(activeIdx + 1);
+        };
+        pag.appendChild(rightBtn);
+    }
+
+    renderChapter(0);
+})();
+{% endif %}
+</script>
+<script src="{{ url_for('static', filename='js/story.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/story.css') }}">
+{% endblock %}

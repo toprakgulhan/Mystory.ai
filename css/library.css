@@ -1,0 +1,238 @@
+.library-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.story-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.story-card {
+    background: var(--primary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.2s;
+    height: 470px; 
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+}
+
+.story-card:hover {
+    transform: translateY(-5px);
+}
+
+.story-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background-color: var(--accent-color);
+}
+
+.story-content {
+    padding: 1rem;
+}
+
+.story-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.story-date {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-color);
+}
+
+.empty-state h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.empty-state p {
+    opacity: 0.7;
+    margin-bottom: 2rem;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.create-story-btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.create-story-btn:hover {
+    background-color: var(--accent-color);
+}
+
+.story-card-footer {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    gap: 1rem; 
+    padding: 1rem; 
+    border-top: 1px solid var(--border-color);
+}
+
+.view-story-btn, .delete-story-btn {
+    padding: 0.4rem 0.8rem; 
+    font-size: 0.7rem; 
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 150px; 
+    height: 40px; 
+    text-align: center;
+}
+
+.view-story-btn {
+    background-color: #013220; 
+    color: white;
+}
+
+.view-story-btn:hover {
+    background-color: #014d30;
+}
+
+.delete-story-btn {
+    background-color: #4B0000; 
+    color: white;
+}
+
+.delete-story-btn:hover {
+    background-color: #600000; 
+}
+
+.story-plot {
+    padding: 1.5rem; 
+    font-size: 0.9rem;
+    color: var(--text-color);
+    line-height: 1.6;
+    background-color: var(--bg-secondary);
+    border-radius: 4px;
+    margin-bottom: 1rem; 
+    flex-grow: 0; 
+    height: 270px; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.story-card-tags {
+    height: 60px; 
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    margin-top: 0.5rem;
+    font-size: 0.9rem; 
+    color: var(--text-color);
+    opacity: 0.8;
+    gap: 0.75rem; 
+}
+
+.story-card-tags .tag {
+    flex: 0; 
+    text-align: center;
+    padding: 0 0.5rem; 
+}
+
+.story-card-tags .separator {
+    flex: 0; 
+    color: var(--text-secondary); 
+    opacity: 0.6;
+    font-size: 0.85rem; 
+}
+
+.story-card-header {
+    height: 200px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem; 
+    text-align: center;
+}
+
+.story-card-header h3 {
+    padding: 0.25rem; 
+    font-size: 1rem; 
+    color: var(--text-primary);
+    text-align: center; 
+    margin: 0; 
+}
+
+.title-container {
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    margin: 0; 
+    padding: 0.5rem 0; 
+    
+    
+}
+
+.title-container h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.page-title {
+    text-align: center; 
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+}
+
+.page-content {
+    margin-top: 4rem; 
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #4a4a4a;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5a5a5a;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #4a4a4a var(--bg-secondary);
+}
+

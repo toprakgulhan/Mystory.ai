@@ -1,0 +1,89 @@
+.auth-container {
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 5rem;
+    padding: 2rem;
+    background-color: var(--bg-primary);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.auth-title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.1);
+}
+
+.primary-button {
+    background-color: #06402B;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.primary-button:hover {
+    background-color: #005000; 
+}
+
+.flashes {
+    margin-bottom: 1rem;
+}
+
+.flash {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.flash.success {
+    background-color: #28a745;
+    color: white;
+}
+
+.flash.error {
+    background-color: #dc3545;
+    color: white;
+}

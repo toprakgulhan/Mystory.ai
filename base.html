@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MyStory.ai{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    {% block styles %}{% endblock %}
+</head>
+<body>
+    <div class="app-container">
+        <nav class="side-menu">
+            <div class="menu-header">
+                <a href="{{ url_for('index') }}">
+                    <h1>MyStory.ai</h1>
+                </a>
+            </div>
+            <ul class="menu-items">
+                <li>
+                    <a href="{{ url_for('index') }}">
+                        Hikayeni Oluştur
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('library') }}">
+                        Kütüphane
+                    </a>
+                </li>
+            </ul>
+            <div class="citation">
+                Bu web sitesi OpenAI'nin ChatGPT teknolojisinden yararlanmaktadır
+            </div>
+        </nav>
+        <button class="menu-toggle">☰</button>
+
+        <div class="main-content">
+            <div class="top-bar">
+                <div class="auth-buttons">
+                    {% if current_user %}
+                        <span class="username">{{ current_user.username }}</span>
+                        <span class="separator"> </span>
+                        <button class="auth-btn logout" id="logout-btn">Çıkış Yap</button>
+                    {% else %}
+                        <button class="auth-btn login" onclick="window.location.href='{{ url_for('login') }}'">Giriş Yap</button>
+                        <button class="auth-btn signup" onclick="window.location.href='{{ url_for('signup') }}'">Kayıt Ol</button>
+                    {% endif %}
+                </div>
+            </div>
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    
+    <script>
+        console.log('Base template loaded');
+        $(document).ready(function() {
+            console.log('jQuery ready');
+            $('#logout-btn').on('click', function(e) {
+                if (!confirm('Çıkış yapmak istediğinize emin misiniz?')) {
+                    e.preventDefault();
+                } else {
+                    window.location.href = "{{ url_for('logout') }}";
+                }
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

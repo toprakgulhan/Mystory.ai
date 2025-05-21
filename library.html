@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}MyStory.ai - Kütüphane{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/library.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="library-container page-content">
+    <h1 class="page-title" style="text-align: center;">Kütüphanem</h1>
+    {% if session.get('user_id') %}
+        <div class="story-grid">
+            {% if stories %}
+                {% for story in stories %}
+                <div class="story-card" data-story-id="{{ story.id }}">
+                    <div class="story-card-header">
+                        <div class="title-container">
+                            <h3>{{ story.plot if story.plot else "Hikaye" }}</h3>
+                        </div>
+                        <div class="story-card-tags">
+                            <span class="tag style-tag">{{ story.writing_style }}</span>
+                            <span class="separator"></span>
+                            <span class="tag genre-tag">{{ story.genre }}</span>
+                            <span class="separator"></span>
+                            <span class="tag chapter-tag">{{ story.chapter_count }} Bölüm</span>
+                        </div>
+                    </div>
+                    <p class="story-plot">{{ story.content[:200] }}...</p>
+                    <div class="story-card-footer" style="display: flex; gap: 0.5rem;">
+                        <button class="view-story-btn" onclick="window.location.href='/story/{{ story.id }}'">
+                            Hikayeyi Görüntüle
+                        </button>
+                        <form method="POST" action="{{ url_for('delete_story') }}" style="display:inline;">
+                            <input type="hidden" name="story_id" value="{{ story.id }}">
+                            <button type="submit" class="delete-story-btn" onclick="return">Hikayeyi Sil</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-message">
+                    Kütüphane boş
+                </div>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="empty-message">
+            Kütüphaneyi görüntülemek ve hikayenizi kaydetmek için hesap açınız.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/library.js') }}"></script>
+{% endblock %}
